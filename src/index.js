@@ -1,3 +1,8 @@
 import './style.css';
+import TodoItem from './AppLogic';
+import popup from './DOMStuff';
 
-console.log('ssss');
+console.log('sd');
+console.log(TodoItem);
+
+popup();
