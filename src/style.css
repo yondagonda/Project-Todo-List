@@ -41,6 +41,13 @@ container {
 .side-bar {
   border-right: 1px solid black;
   padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+.side-bar > * {
+  font-size: 16px;
+  padding: 0.6em;
 }
 
 .projects {
@@ -55,4 +62,24 @@ container {
   font-size: 2em;
   border-radius: 14px;
   padding-inline: 0.5em;
+}
+
+.popup {
+  padding: 12em;
+  /*display: none;*/
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+  gap: 5px;
+  margin-inline: auto;
+}
+
+.todo-entry {
+  padding: 1em;
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
 }

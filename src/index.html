@@ -12,10 +12,10 @@
       <header>Todo App</header>
       <container>
         <section class="side-bar">
-          <div class="all">All</div>
-          <div class="today">Today</div>
-          <div class="upcoming">Upcoming</div>
-          <div class="completed">Completed</div>
+          <button class="all">All</button>
+          <button class="today">Today</button>
+          <button class="upcoming">Upcoming</button>
+          <button class="completed">Completed</button>
           <div class="projects">Projects</div>
         </section>
         <section class="content">
@@ -25,5 +25,28 @@
         </section>
       </container>
     </main>
+
+    <div class="popup">
+      <form action="" method="post">
+        <label for="title">Title</label>
+        <input type="text" id="title" />
+
+        <label for="description">Description</label>
+        <input type="text" id="description" />
+
+        <label for="due-date">Due Date</label>
+        <input type="text" id="dueDate" />
+
+        <label for="priority">Priority</label>
+        <select name="priority" id="priority">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="urgent">Urgent</option>
+        </select>
+
+        <button type="button" id="create">Create</button>
+      </form>
+    </div>
   </body>
 </html>
