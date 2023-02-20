@@ -6,10 +6,6 @@ class TodoItem {
     this.priority = priority;
     this.project = project;
   }
-
-  returnTitle() {
-    console.log(`this tasks dname is ${this.title}`);
-  }
 }
 
 export default TodoItem;

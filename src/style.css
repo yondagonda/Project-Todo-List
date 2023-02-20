@@ -83,3 +83,10 @@ form {
   display: flex;
   justify-content: space-between;
 }
+.todo-buttons {
+  display: flex;
+  gap: 6px;
+}
+.todo-buttons > * {
+  padding: 0.4em;
+}

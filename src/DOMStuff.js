@@ -1,23 +1,12 @@
-import TodoItem from './AppLogic';
-
-function popup() {
-  const add = document.querySelector('.add-todo');
-  add.addEventListener('click', () => {
-    console.log('wassup');
-  });
-  document.querySelector('.popup').style.display = 'block';
-}
-
-const myTodos = [];
+let myTodos = [];
 
 function displayTodo() {
   const display = document.querySelector('.content-display');
   display.innerHTML = ' ';
 
   for (let i = 0; i < myTodos.length; i++) {
-    const todoEntry = document.createElement('div'); // data-id for our todo items
+    const todoEntry = document.createElement('div');
     todoEntry.classList.add('todo-entry');
-    todoEntry.dataset.id = [i];
     display.appendChild(todoEntry);
 
     const todoEntryContainer = document.createElement('div');
@@ -55,6 +44,7 @@ function displayTodo() {
 
     const trashButton = document.createElement('button');
     trashButton.classList.add('trash-button');
+    trashButton.dataset.id = [i]; // data-id for our delete button
     trashButton.innerHTML = 'trash';
     todoButtons.appendChild(trashButton);
 
@@ -63,23 +53,22 @@ function displayTodo() {
     infoButton.innerHTML = 'info';
     todoButtons.appendChild(infoButton);
   }
+  deleteTodo();
+  // return myTodos;
 }
 
-const createTodo = document.getElementById('create');
-createTodo.addEventListener('click', () => {
-  const titleInput = document.getElementById('title').value;
-  const descriptionInput = document.getElementById('description').value;
-  const dueDateInput = document.getElementById('dueDate').value;
-  const priorityInput = document.getElementById('priority').value;
-  const todo = new TodoItem(
-    titleInput,
-    descriptionInput,
-    dueDateInput,
-    priorityInput
-  );
-  myTodos.push(todo);
-  console.log(myTodos);
-  displayTodo();
-});
+function deleteTodo() {
+  const deleteButton = document.querySelectorAll('.trash-button');
+  deleteButton.forEach((del) => {
+    del.addEventListener('click', (e) => {
+      const dataID = +e.target.getAttribute('data-id');
+      console.log(dataID);
+      console.log(myTodos);
+      myTodos = myTodos.filter((Todos, index) => index !== dataID);
+      console.table(myTodos);
+      displayTodo();
+    });
+  });
+}
 
-export { popup, displayTodo };
+export { displayTodo, myTodos, deleteTodo };
