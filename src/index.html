@@ -16,7 +16,11 @@
           <button class="today">Today</button>
           <button class="upcoming">Upcoming</button>
           <button class="completed">Completed</button>
-          <div class="projects">Projects</div>
+          <div class="projects">
+            <div class="projects-header">Projects</div>
+            <div class="projects-display"></div>
+            <button class="add-project">+</button>
+          </div>
         </section>
         <section class="content">
           <div class="content-header">All tasks</div>
@@ -26,8 +30,8 @@
       </container>
     </main>
 
-    <div class="popup">
-      <form action="" method="post">
+    <div class="task-popup">
+      <form class="task-form" action="" method="post">
         <label for="title">Title</label>
         <input type="text" id="title" />
 
@@ -46,6 +50,14 @@
         </select>
 
         <button type="button" id="create">Create</button>
+      </form>
+    </div>
+    <div class="project-popup">
+      <form class="project-form" action="" method="post">
+        <label for="project-name">Title</label>
+        <input type="text" id="project-name" />
+
+        <button type="button" id="create-project">Create</button>
       </form>
     </div>
   </body>

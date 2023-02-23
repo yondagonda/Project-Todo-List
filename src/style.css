@@ -58,18 +58,20 @@ container {
   padding: 1em;
 }
 
-.add-todo {
+.add-todo,
+.add-project {
   font-size: 2em;
   border-radius: 14px;
   padding-inline: 0.5em;
 }
 
-.popup {
-  padding: 12em;
+.task-popup {
+  padding: 5em;
   /*display: none;*/
 }
 
-form {
+.task-form,
+.project-form {
   display: flex;
   flex-direction: column;
   max-width: 50%;
@@ -89,4 +91,9 @@ form {
 }
 .todo-buttons > * {
   padding: 0.4em;
+}
+
+.projects-display {
+  display: flex;
+  flex-direction: column;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 let myTodos = [];
 
 function displayTodo() {
@@ -62,8 +63,7 @@ function deleteTodo() {
   deleteButton.forEach((del) => {
     del.addEventListener('click', (e) => {
       const dataID = +e.target.getAttribute('data-id');
-      console.log(dataID);
-      console.log(myTodos);
+      // console.log(dataID);
       myTodos = myTodos.filter((Todos, index) => index !== dataID);
       console.table(myTodos);
       displayTodo();
@@ -71,4 +71,16 @@ function deleteTodo() {
   });
 }
 
-export { displayTodo, myTodos, deleteTodo };
+function insertProjectToSideBar() {
+  const projectsDisplay = document.querySelector('.projects-display');
+  // projectsDisplay.innerHTML = ' ';
+  const projectsNameInput = document.getElementById('project-name').value;
+  if (projectsNameInput !== '') {
+    const projectsSidebar = document.createElement('button');
+    projectsSidebar.classList.add('project-button');
+    projectsSidebar.innerHTML = projectsNameInput;
+    projectsDisplay.appendChild(projectsSidebar);
+  }
+}
+
+export { displayTodo, myTodos, insertProjectToSideBar };
