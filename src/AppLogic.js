@@ -4,16 +4,23 @@ class Project {
     this.name = name;
     this.toDos = [];
   }
+
+  appendTodos(todoItem) {
+    this.toDos.push(todoItem);
+  }
 }
 
-class TodoItem {
-  constructor(title, description, dueDate, priority, project) {
+class TheTodoItems {
+  constructor(title, description, dueDate, priority) {
     this.title = title;
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
-    this.project = project;
+  }
+
+  get todoTitle() {
+    return `${this.title}`;
   }
 }
 
-export { TodoItem, Project };
+export { TheTodoItems, Project };

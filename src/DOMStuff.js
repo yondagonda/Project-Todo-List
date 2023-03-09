@@ -71,10 +71,24 @@ function deleteTodo() {
   });
 }
 
+function projectSidebarButton() {
+  const projectB = document.querySelectorAll('.project-button');
+  projectB.forEach((p) => {
+    p.addEventListener('click', (e) => {
+      console.log(e.target.innerHTML);
+
+      const display = document.querySelector('.content-display');
+      display.innerHTML = ' ';
+      /* PICKUP FROM HERE - needs to start adding todos into the new project itself, instead of
+      still adding todo items to the 'all' project */
+    });
+  });
+}
+
 function insertProjectToSideBar() {
   const projectsDisplay = document.querySelector('.projects-display');
-  // projectsDisplay.innerHTML = ' ';
   const projectsNameInput = document.getElementById('project-name').value;
+
   if (projectsNameInput !== '') {
     const projectsSidebar = document.createElement('button');
     projectsSidebar.classList.add('project-button');
@@ -83,4 +97,4 @@ function insertProjectToSideBar() {
   }
 }
 
-export { displayTodo, myTodos, insertProjectToSideBar };
+export { displayTodo, myTodos, insertProjectToSideBar, projectSidebarButton };
