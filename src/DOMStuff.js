@@ -1,5 +1,8 @@
 /* eslint-disable no-use-before-define */
+import { TodoItem, Project } from './AppLogic';
+
 let myTodos = [];
+const myProjects = [];
 
 function displayTodo() {
   const display = document.querySelector('.content-display');
@@ -55,7 +58,6 @@ function displayTodo() {
     todoButtons.appendChild(infoButton);
   }
   deleteTodo();
-  // return myTodos;
 }
 
 function deleteTodo() {
@@ -67,20 +69,6 @@ function deleteTodo() {
       myTodos = myTodos.filter((Todos, index) => index !== dataID);
       console.table(myTodos);
       displayTodo();
-    });
-  });
-}
-
-function projectSidebarButton() {
-  const projectB = document.querySelectorAll('.project-button');
-  projectB.forEach((p) => {
-    p.addEventListener('click', (e) => {
-      console.log(e.target.innerHTML);
-
-      const display = document.querySelector('.content-display');
-      display.innerHTML = ' ';
-      /* PICKUP FROM HERE - needs to start adding todos into the new project itself, instead of
-      still adding todo items to the 'all' project */
     });
   });
 }
@@ -97,4 +85,27 @@ function insertProjectToSideBar() {
   }
 }
 
-export { displayTodo, myTodos, insertProjectToSideBar, projectSidebarButton };
+let currentProjectHolder;
+
+function projectSidebarButton() {
+  const projectB = document.querySelectorAll('.project-button');
+  projectB.forEach((p) => {
+    p.addEventListener('click', (e) => {
+      const display = document.querySelector('.content-display');
+      display.innerHTML = ' ';
+
+      currentProjectHolder = e.target.innerHTML;
+      console.log('You are now in project:', currentProjectHolder);
+      return currentProjectHolder;
+    });
+  });
+}
+
+export {
+  displayTodo,
+  myTodos,
+  myProjects,
+  insertProjectToSideBar,
+  projectSidebarButton,
+  currentProjectHolder,
+};
