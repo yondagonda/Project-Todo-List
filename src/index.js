@@ -1,13 +1,12 @@
 import './style.css';
 import { TodoItem, Project } from './AppLogic';
 import {
-  myTodos,
+  // myTodos, THIS HAS BECOME OBSOLETE, DELETE?
   myProjects,
   insertProjectToSideBar,
   projectSidebarButton,
   currentProjectHolder,
   displayTodosFromSpecificProject,
-  allTodosButtonFunc,
 } from './DOMStuff';
 
 // const addItemButton = document.querySelector('.add-todo'); // POPUP FUNCTIONALITY STUFF
@@ -25,10 +24,8 @@ import {
 const createTodoButton = document.getElementById('create');
 const createProjectButton = document.getElementById('create-project');
 
-const allProjects = new Project('All Projects'); // keeps track of ALL todos from ALL projects
-myProjects.push(allProjects);
-
-allTodosButtonFunc();
+const DefaultProjects = new Project('Default');
+myProjects.push(DefaultProjects);
 
 // CREATE BUTTON ON PROJECT FORM
 createProjectButton.addEventListener('click', () => {
@@ -37,7 +34,7 @@ createProjectButton.addEventListener('click', () => {
   myProjects.push(theProject);
 
   insertProjectToSideBar();
-  projectSidebarButton(); // compounding click issue
+  projectSidebarButton(); // compounding click issue present
   console.table(myProjects);
 });
 
@@ -53,7 +50,6 @@ createTodoButton.addEventListener('click', () => {
     dueDateInput,
     priorityInput
   );
-  myTodos.push(todo);
 
   for (let i = 0; i < myProjects.length; i++) {
     const display = document.querySelector('.content-display');
@@ -63,14 +59,11 @@ createTodoButton.addEventListener('click', () => {
     }
   }
 
-  if (currentProjectHolder === 'All Projects') {
+  if (currentProjectHolder === 'Default') {
     for (let k = 0; k < myProjects[0].toDos.length; k++) {
       displayTodosFromSpecificProject(0, k);
     }
   } else {
-    myProjects[0].addTodoItem(todo);
-    console.log(`Added todo item to: ${currentProjectHolder}`);
-
     for (let i = 0; i < myProjects.length; i++) {
       for (let j = 0; j < myProjects[i].toDos.length; j++) {
         if (myProjects[i].name === currentProjectHolder) {

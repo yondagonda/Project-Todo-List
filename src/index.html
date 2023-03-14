@@ -12,13 +12,14 @@
       <header>Todo App</header>
       <container>
         <section class="side-bar">
-          <button class="all">All</button>
           <button class="today">Today</button>
           <button class="upcoming">Upcoming</button>
           <button class="completed">Completed</button>
           <div class="projects">
             <div class="projects-header">Projects</div>
-            <div class="projects-display"></div>
+            <div class="projects-display">
+              <button class="project-button">Default</button>
+            </div>
             <button class="add-project">+</button>
           </div>
         </section>
@@ -54,10 +55,33 @@
     </div>
     <div class="project-popup">
       <form class="project-form" action="" method="post">
-        <label for="project-name">Title</label>
+        <label for="project-name">Add New Project</label>
         <input type="text" id="project-name" />
 
         <button type="button" id="create-project">Create</button>
+      </form>
+    </div>
+
+    <div class="edit-todo-popup">
+      <form class="edit-todo-form" action="" method="post">
+        <label for="edit-title">Title</label>
+        <input type="text" id="edit-title" />
+
+        <label for="edit-description">Description</label>
+        <input type="text" id="edit-description" />
+
+        <label for="edit-due-date">Due Date</label>
+        <input type="text" id="edit-due-date" />
+
+        <label for="edit-priority">Priority</label>
+        <select name="priority" id="edit-priority">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="urgent">Urgent</option>
+        </select>
+
+        <button type="button" id="confirm-edit">Confirm Edit</button>
       </form>
     </div>
   </body>

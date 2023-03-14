@@ -1,9 +1,9 @@
 /* eslint-disable import/no-mutable-exports */
-// import { TodoItem, Project } from './AppLogic';
+import { TodoItem, Project } from './AppLogic';
 
-let myTodos = [];
 const myProjects = [];
-let currentProjectHolder = 'All Projects';
+let currentProjectHolder = 'Default';
+let dataID;
 
 function displayTodosFromSpecificProject(x, y) {
   const display = document.querySelector('.content-display');
@@ -26,7 +26,7 @@ function displayTodosFromSpecificProject(x, y) {
 
   const todoDueDate = document.createElement('div'); // this will need updating/changing
   todoDueDate.classList.add('todoDueDate');
-  todoDueDate.innerText = myProjects[x].toDos[y].duedate;
+  todoDueDate.innerText = myProjects[x].toDos[y].dueDate;
   todoEntryContainer.appendChild(todoDueDate);
 
   const todoPriority = document.createElement('div');
@@ -34,18 +34,19 @@ function displayTodosFromSpecificProject(x, y) {
   todoPriority.innerText = myProjects[x].toDos[y].priority;
   todoEntryContainer.appendChild(todoPriority);
 
-  const todoButtons = document.createElement('div'); // buttons on our todo items starts here
+  const todoButtons = document.createElement('div');
   todoButtons.classList.add('todo-buttons');
   todoEntry.appendChild(todoButtons);
 
   const editButton = document.createElement('button');
   editButton.classList.add('edit-button');
+  editButton.dataset.id = myProjects[x].toDos[y].id;
   editButton.innerHTML = 'edit';
   todoButtons.appendChild(editButton);
 
   const trashButton = document.createElement('button');
   trashButton.classList.add('trash-button');
-  trashButton.dataset.id = [y]; // data-id for our delete button
+  trashButton.dataset.id = myProjects[x].toDos[y].id;
   trashButton.innerHTML = 'trash';
   todoButtons.appendChild(trashButton);
 
@@ -53,21 +54,57 @@ function displayTodosFromSpecificProject(x, y) {
   infoButton.classList.add('info-button');
   infoButton.innerHTML = 'info';
   todoButtons.appendChild(infoButton);
-  deleteTodo(); // remove this?
-}
 
-function deleteTodo() {
-  // use as a method on our class instead?
-  const deleteButton = document.querySelectorAll('.trash-button');
-  deleteButton.forEach((del) => {
-    del.addEventListener('click', (e) => {
-      const dataID = +e.target.getAttribute('data-id');
-      myTodos = myTodos.filter((Todos, index) => index !== dataID);
-      console.table(myTodos);
-      // displayTodo(); redundant now, needs replacement
-    });
+  trashButton.addEventListener('click', (e) => {
+    dataID = +e.target.getAttribute('data-id'); // TRASH BUTTON FUNCTIONALITY
+    display.innerHTML = '';
+    myProjects[x].removeTodoItem(dataID);
+    if (myProjects[x].name === currentProjectHolder) {
+      for (let j = 0; j < myProjects[x].toDos.length; j++) {
+        displayTodosFromSpecificProject(x, j);
+      }
+    }
+    console.table(myProjects);
+  });
+
+  editButton.addEventListener('click', (e) => {
+    dataID = +e.target.getAttribute('data-id'); // FETCHES VALUES TO POPULATE EDIT FORM
+    console.log(`now editing todo ID: ${dataID}`);
+    if (myProjects[x].toDos[y].id === dataID) {
+      document.getElementById('edit-title').value =
+        myProjects[x].toDos[y].title;
+      document.getElementById('edit-description').value =
+        myProjects[x].toDos[y].description;
+    }
+    return dataID;
   });
 }
+
+const confirmEditButton = document.getElementById('confirm-edit');
+confirmEditButton.addEventListener('click', () => {
+  const display = document.querySelector('.content-display');
+  display.innerHTML = '';
+
+  for (let i = 0; i < myProjects.length; i++) {
+    for (let j = 0; j < myProjects[i].toDos.length; j++) {
+      if (myProjects[i].toDos[j].id === dataID) {
+        myProjects[i].toDos[j].title =
+          document.getElementById('edit-title').value;
+        myProjects[i].toDos[j].description =
+          document.getElementById('edit-description').value;
+        console.log(myProjects); // now we render myProjects through the forloops below
+
+        for (let k = 0; k < myProjects.length; k++) {
+          if (myProjects[k].name === currentProjectHolder) {
+            for (let l = 0; l < myProjects[k].toDos.length; l++) {
+              displayTodosFromSpecificProject(k, l);
+            }
+          }
+        }
+      }
+    }
+  }
+});
 
 function insertProjectToSideBar() {
   const projectsDisplay = document.querySelector('.projects-display');
@@ -102,26 +139,10 @@ function projectSidebarButton() {
   });
 }
 
-function allTodosButtonFunc() {
-  const allTodosButton = document.querySelector('.all');
-  allTodosButton.addEventListener('click', () => {
-    const display = document.querySelector('.content-display');
-    display.innerHTML = '';
-    for (let k = 0; k < myProjects[0].toDos.length; k++) {
-      displayTodosFromSpecificProject(0, k);
-    }
-    currentProjectHolder = 'All Projects';
-    console.log('You are now in project:', currentProjectHolder);
-    return currentProjectHolder;
-  });
-}
-
 export {
-  myTodos,
   myProjects,
   insertProjectToSideBar,
   projectSidebarButton,
   currentProjectHolder,
   displayTodosFromSpecificProject,
-  allTodosButtonFunc,
 };

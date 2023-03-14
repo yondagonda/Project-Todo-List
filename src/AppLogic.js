@@ -7,8 +7,8 @@ class TodoItem {
     this.description = description;
     this.dueDate = dueDate;
     this.priority = priority;
-    // this.id = Date.now();
     this.projectID = currentProjectHolder;
+    this.id = Date.now();
   }
 }
 
@@ -22,17 +22,17 @@ class Project {
     this.toDos.push(todoItem);
   }
 
-  // removeTodoItem(id) {
-  //   const todoIndex = this.toDos.findIndex((todo) => todo.id === id);
-  //   if (todoIndex !== -1) {
-  //     this.toDos.splice(todoIndex, 1);
-  //     console.log(
-  //       `todo item with ID ${id} was removed from project ${this.name} `
-  //     );
-  //   } else {
-  //     console.log(`could not find todoitem with ID ${id} in project`);
-  //   }
-  // }
+  removeTodoItem(id) {
+    const todoIndex = this.toDos.findIndex((todo) => todo.id === id);
+    if (todoIndex !== -1) {
+      this.toDos.splice(todoIndex, 1);
+      console.log(
+        `todo item with ID ${id} was removed from project ${this.name} `
+      );
+    } else {
+      console.log(`could not find todoitem with ID ${id} in project`);
+    }
+  }
 }
 
 export { TodoItem, Project };

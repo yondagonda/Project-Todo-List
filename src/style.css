@@ -71,12 +71,17 @@ container {
 }
 
 .task-form,
-.project-form {
+.project-form,
+.edit-todo-form {
   display: flex;
   flex-direction: column;
   max-width: 50%;
   gap: 5px;
   margin-inline: auto;
+}
+
+.project-form {
+  margin-bottom: 60px;
 }
 
 .todo-entry {
