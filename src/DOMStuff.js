@@ -1,4 +1,5 @@
 /* eslint-disable import/no-mutable-exports */
+import { format } from 'date-fns';
 import { TodoItem, Project } from './AppLogic';
 
 const myProjects = [];
@@ -16,22 +17,26 @@ function displayTodosFromSpecificProject(x, y) {
 
   const todoTitle = document.createElement('div');
   todoTitle.classList.add('todoTitle');
-  todoTitle.innerText = myProjects[x].toDos[y].title;
+  todoTitle.innerText = `Task Name: ${myProjects[x].toDos[y].title}`;
   todoEntryContainer.appendChild(todoTitle);
 
-  const todoDescription = document.createElement('div');
+  const todoDescription = document.createElement('div'); // comment this out later?
   todoDescription.classList.add('todoDescription');
   todoDescription.innerText = myProjects[x].toDos[y].description;
   todoEntryContainer.appendChild(todoDescription);
 
-  const todoDueDate = document.createElement('div'); // this will need updating/changing
+  const todoDueDate = document.createElement('div');
   todoDueDate.classList.add('todoDueDate');
-  todoDueDate.innerText = myProjects[x].toDos[y].dueDate;
+  // todoDueDate.innerText = `Due: ${format(
+  //   new Date(myProjects[x].toDos[y].dueDate), // issue: due date MUST be set for format() to work, otherwise error
+  //   'dd MMM yyyy'
+  // )}`;
+  todoDueDate.innerText = `Due: ${myProjects[x].toDos[y].dueDate}`;
   todoEntryContainer.appendChild(todoDueDate);
 
   const todoPriority = document.createElement('div');
   todoPriority.classList.add('todoPriority');
-  todoPriority.innerText = myProjects[x].toDos[y].priority;
+  todoPriority.innerText = `Priority: ${myProjects[x].toDos[y].priority}`; // comment this out later?
   todoEntryContainer.appendChild(todoPriority);
 
   const todoButtons = document.createElement('div');
@@ -59,9 +64,16 @@ function displayTodosFromSpecificProject(x, y) {
     dataID = +e.target.getAttribute('data-id'); // TRASH BUTTON FUNCTIONALITY
     display.innerHTML = '';
     myProjects[x].removeTodoItem(dataID);
+    // localStorage.removeItem(myProjects[x].name); // this works, but can only delete whole projects by name/key
+
     if (myProjects[x].name === currentProjectHolder) {
       for (let j = 0; j < myProjects[x].toDos.length; j++) {
+        localStorage.removeItem(myProjects[x].toDos[j].title);
         displayTodosFromSpecificProject(x, j);
+
+        // for (let i = 0; i < myProjects.length; i++) {
+        //   localStorage.removeItem(myProjects[i].name);
+        // }
       }
     }
     console.table(myProjects);
@@ -75,16 +87,19 @@ function displayTodosFromSpecificProject(x, y) {
         myProjects[x].toDos[y].title;
       document.getElementById('edit-description').value =
         myProjects[x].toDos[y].description;
+      document.getElementById('edit-due-date').value =
+        myProjects[x].toDos[y].dueDate;
+      document.getElementById('edit-priority').value =
+        myProjects[x].toDos[y].priority;
     }
     return dataID;
   });
 }
 
-const confirmEditButton = document.getElementById('confirm-edit');
+const confirmEditButton = document.getElementById('confirm-edit'); // EDIT BUTTON FUNCTIONALITY
 confirmEditButton.addEventListener('click', () => {
   const display = document.querySelector('.content-display');
   display.innerHTML = '';
-
   for (let i = 0; i < myProjects.length; i++) {
     for (let j = 0; j < myProjects[i].toDos.length; j++) {
       if (myProjects[i].toDos[j].id === dataID) {
@@ -92,12 +107,21 @@ confirmEditButton.addEventListener('click', () => {
           document.getElementById('edit-title').value;
         myProjects[i].toDos[j].description =
           document.getElementById('edit-description').value;
-        console.log(myProjects); // now we render myProjects through the forloops below
-
+        myProjects[i].toDos[j].dueDate =
+          document.getElementById('edit-due-date').value;
+        myProjects[i].toDos[j].priority =
+          document.getElementById('edit-priority').value;
+        console.log(myProjects);
+        // now we render myProjects through the forloops below
         for (let k = 0; k < myProjects.length; k++) {
           if (myProjects[k].name === currentProjectHolder) {
             for (let l = 0; l < myProjects[k].toDos.length; l++) {
               displayTodosFromSpecificProject(k, l);
+
+              localStorage.setItem(
+                myProjects[k].name,
+                JSON.stringify(myProjects[k])
+              );
             }
           }
         }
@@ -109,7 +133,6 @@ confirmEditButton.addEventListener('click', () => {
 function insertProjectToSideBar() {
   const projectsDisplay = document.querySelector('.projects-display');
   const projectsNameInput = document.getElementById('project-name').value;
-
   if (projectsNameInput !== '') {
     const projectsSidebar = document.createElement('button');
     projectsSidebar.classList.add('project-button');
@@ -134,9 +157,18 @@ function projectSidebarButton() {
         }
       }
       console.log('You are now in project:', currentProjectHolder);
+      document.querySelector(
+        '.content-header'
+      ).innerText = `Project: ${currentProjectHolder}`;
       return currentProjectHolder;
     });
   });
+}
+
+function saveTodoToLocal(title) {
+  console.log('saving object to local storage...');
+  localStorage.setItem('title', document.getElementById('title').value);
+  return { title };
 }
 
 export {
@@ -145,4 +177,5 @@ export {
   projectSidebarButton,
   currentProjectHolder,
   displayTodosFromSpecificProject,
+  saveTodoToLocal,
 };

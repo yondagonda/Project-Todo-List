@@ -24,7 +24,7 @@
           </div>
         </section>
         <section class="content">
-          <div class="content-header">All tasks</div>
+          <div class="content-header">Project: Default</div>
           <div class="content-display"></div>
           <button class="add-todo">+</button>
         </section>
@@ -40,7 +40,7 @@
         <input type="text" id="description" />
 
         <label for="due-date">Due Date</label>
-        <input type="text" id="dueDate" />
+        <input type="date" id="dueDate" />
 
         <label for="priority">Priority</label>
         <select name="priority" id="priority">
@@ -50,15 +50,14 @@
           <option value="urgent">Urgent</option>
         </select>
 
-        <button type="button" id="create">Create</button>
+        <button type="button" id="create">Create Todo</button>
       </form>
     </div>
     <div class="project-popup">
       <form class="project-form" action="" method="post">
         <label for="project-name">Add New Project</label>
         <input type="text" id="project-name" />
-
-        <button type="button" id="create-project">Create</button>
+        <button type="button" id="create-project">Create Project</button>
       </form>
     </div>
 
@@ -71,7 +70,7 @@
         <input type="text" id="edit-description" />
 
         <label for="edit-due-date">Due Date</label>
-        <input type="text" id="edit-due-date" />
+        <input type="date" id="edit-due-date" />
 
         <label for="edit-priority">Priority</label>
         <select name="priority" id="edit-priority">
@@ -81,7 +80,7 @@
           <option value="urgent">Urgent</option>
         </select>
 
-        <button type="button" id="confirm-edit">Confirm Edit</button>
+        <button type="button" id="confirm-edit">Confirm Edits</button>
       </form>
     </div>
   </body>

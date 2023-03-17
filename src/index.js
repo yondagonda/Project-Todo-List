@@ -1,12 +1,12 @@
 import './style.css';
 import { TodoItem, Project } from './AppLogic';
 import {
-  // myTodos, THIS HAS BECOME OBSOLETE, DELETE?
   myProjects,
   insertProjectToSideBar,
   projectSidebarButton,
   currentProjectHolder,
   displayTodosFromSpecificProject,
+  saveTodoToLocal,
 } from './DOMStuff';
 
 // const addItemButton = document.querySelector('.add-todo'); // POPUP FUNCTIONALITY STUFF
@@ -34,9 +34,36 @@ createProjectButton.addEventListener('click', () => {
   myProjects.push(theProject);
 
   insertProjectToSideBar();
-  projectSidebarButton(); // compounding click issue present
+  projectSidebarButton();
   console.table(myProjects);
+
+  for (let i = 0; i < myProjects.length; i++) {
+    localStorage.setItem(projectsNameInput, JSON.stringify(myProjects[i]));
+  }
 });
+
+const objectFromLS = JSON.parse(Object.values(localStorage));
+console.log(objectFromLS);
+
+for (let j = 0; j < objectFromLS.toDos.length; j++) {
+  const todoFromLS = new TodoItem(
+    objectFromLS.toDos[j].title,
+    objectFromLS.toDos[j].description,
+    objectFromLS.toDos[j].dueDate,
+    objectFromLS.toDos[j].priority
+  );
+  myProjects[0].toDos.push(todoFromLS);
+}
+
+console.log(myProjects);
+
+// for (let k = 0; k < myProjects.length; k++) {
+//   for (let l = 0; l < myProjects[k].toDos.length; l++) {
+//     if (myProjects[k].name === currentProjectHolder) {
+//       displayTodosFromSpecificProject(k, l);
+//     }
+//   }
+// }
 
 // CREATE BUTTON ON TODO FORM
 createTodoButton.addEventListener('click', () => {
@@ -59,16 +86,12 @@ createTodoButton.addEventListener('click', () => {
     }
   }
 
-  if (currentProjectHolder === 'Default') {
-    for (let k = 0; k < myProjects[0].toDos.length; k++) {
-      displayTodosFromSpecificProject(0, k);
-    }
-  } else {
-    for (let i = 0; i < myProjects.length; i++) {
-      for (let j = 0; j < myProjects[i].toDos.length; j++) {
-        if (myProjects[i].name === currentProjectHolder) {
-          displayTodosFromSpecificProject(i, j);
-        }
+  for (let i = 0; i < myProjects.length; i++) {
+    for (let j = 0; j < myProjects[i].toDos.length; j++) {
+      if (myProjects[i].name === currentProjectHolder) {
+        displayTodosFromSpecificProject(i, j);
+
+        localStorage.setItem(myProjects[i].name, JSON.stringify(myProjects[i]));
       }
     }
   }
