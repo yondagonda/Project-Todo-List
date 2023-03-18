@@ -6,7 +6,6 @@ import {
   projectSidebarButton,
   currentProjectHolder,
   displayTodosFromSpecificProject,
-  saveTodoToLocal,
 } from './DOMStuff';
 
 // const addItemButton = document.querySelector('.add-todo'); // POPUP FUNCTIONALITY STUFF
@@ -38,32 +37,52 @@ createProjectButton.addEventListener('click', () => {
   console.table(myProjects);
 
   for (let i = 0; i < myProjects.length; i++) {
-    localStorage.setItem(projectsNameInput, JSON.stringify(myProjects[i]));
+    if (myProjects[i].name === projectsNameInput) {
+      localStorage.setItem(myProjects[i].name, JSON.stringify(myProjects[i]));
+    }
   }
 });
 
-const objectFromLS = JSON.parse(Object.values(localStorage));
-console.log(objectFromLS);
+// features to add: project deletion button, more info popup for the todos, set limit of 3 projects max?
 
-for (let j = 0; j < objectFromLS.toDos.length; j++) {
-  const todoFromLS = new TodoItem(
-    objectFromLS.toDos[j].title,
-    objectFromLS.toDos[j].description,
-    objectFromLS.toDos[j].dueDate,
-    objectFromLS.toDos[j].priority
-  );
-  myProjects[0].toDos.push(todoFromLS);
+function LOCAL_STORAGE_STUFF() {
+  // retrieves projects from LS and pushes it into myProjects
+  for (let m = 1; m < Object.values(localStorage).length; m++) {
+    const ourObjects = JSON.parse(Object.values(localStorage)[m]);
+    const projectFromLS = new Project(ourObjects.name);
+    myProjects.push(projectFromLS);
+  }
+  // retrieves toDos from LS and pushes it into the projects in myProjects
+  for (let q = 0; q < Object.values(localStorage).length; q++) {
+    const ourObjects = JSON.parse(Object.values(localStorage)[q]);
+    for (let r = 0; r < ourObjects.toDos.length; r++) {
+      const todoFromLS = new TodoItem(
+        ourObjects.toDos[r].title,
+        ourObjects.toDos[r].description,
+        ourObjects.toDos[r].dueDate,
+        ourObjects.toDos[r].priority
+      );
+      myProjects[q].toDos.push(todoFromLS);
+    }
+  }
+  // displays myProjects/LS values and also the sidebar project buttons to the DOM:
+  console.log(myProjects);
+  for (let k = 0; k < myProjects.length; k++) {
+    const projectsDisplay = document.querySelector('.projects-display');
+    const projectsSidebar = document.createElement('button');
+    projectsSidebar.classList.add('project-button');
+    projectsSidebar.innerHTML = myProjects[k].name;
+    projectsDisplay.appendChild(projectsSidebar);
+    projectSidebarButton();
+
+    for (let l = 0; l < myProjects[k].toDos.length; l++) {
+      if (myProjects[k].name === currentProjectHolder) {
+        displayTodosFromSpecificProject(k, l);
+      }
+    }
+  }
 }
-
-console.log(myProjects);
-
-// for (let k = 0; k < myProjects.length; k++) {
-//   for (let l = 0; l < myProjects[k].toDos.length; l++) {
-//     if (myProjects[k].name === currentProjectHolder) {
-//       displayTodosFromSpecificProject(k, l);
-//     }
-//   }
-// }
+LOCAL_STORAGE_STUFF();
 
 // CREATE BUTTON ON TODO FORM
 createTodoButton.addEventListener('click', () => {
@@ -90,7 +109,6 @@ createTodoButton.addEventListener('click', () => {
     for (let j = 0; j < myProjects[i].toDos.length; j++) {
       if (myProjects[i].name === currentProjectHolder) {
         displayTodosFromSpecificProject(i, j);
-
         localStorage.setItem(myProjects[i].name, JSON.stringify(myProjects[i]));
       }
     }

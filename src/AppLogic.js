@@ -14,11 +14,6 @@ class TodoItem {
     // this.id = Date.now()
     this.id = count++; // maybe try math.random instead??
   }
-
-  // saveTodoToLocal(title) {
-  //   console.log('saving object to local storage...');
-  //   localStorage.setItem('title', document.getElementById('title').value);
-  // }
 }
 
 class Project {

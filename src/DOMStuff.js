@@ -17,13 +17,13 @@ function displayTodosFromSpecificProject(x, y) {
 
   const todoTitle = document.createElement('div');
   todoTitle.classList.add('todoTitle');
-  todoTitle.innerText = `Task Name: ${myProjects[x].toDos[y].title}`;
+  todoTitle.innerText = `To-do: ${myProjects[x].toDos[y].title}`;
   todoEntryContainer.appendChild(todoTitle);
 
-  const todoDescription = document.createElement('div'); // comment this out later?
-  todoDescription.classList.add('todoDescription');
-  todoDescription.innerText = myProjects[x].toDos[y].description;
-  todoEntryContainer.appendChild(todoDescription);
+  // const todoDescription = document.createElement('div'); // comment this out later?
+  // todoDescription.classList.add('todoDescription');
+  // todoDescription.innerText = myProjects[x].toDos[y].description;
+  // todoEntryContainer.appendChild(todoDescription);
 
   const todoDueDate = document.createElement('div');
   todoDueDate.classList.add('todoDueDate');
@@ -64,16 +64,17 @@ function displayTodosFromSpecificProject(x, y) {
     dataID = +e.target.getAttribute('data-id'); // TRASH BUTTON FUNCTIONALITY
     display.innerHTML = '';
     myProjects[x].removeTodoItem(dataID);
-    // localStorage.removeItem(myProjects[x].name); // this works, but can only delete whole projects by name/key
 
+    // first we update the LS by rendering myProjects' values to LS
+    for (let k = 0; k < myProjects.length; k++) {
+      if (myProjects[k].name === currentProjectHolder) {
+        localStorage.setItem(myProjects[k].name, JSON.stringify(myProjects[k]));
+      }
+    }
+    // then we display it to the DOM
     if (myProjects[x].name === currentProjectHolder) {
       for (let j = 0; j < myProjects[x].toDos.length; j++) {
-        localStorage.removeItem(myProjects[x].toDos[j].title);
         displayTodosFromSpecificProject(x, j);
-
-        // for (let i = 0; i < myProjects.length; i++) {
-        //   localStorage.removeItem(myProjects[i].name);
-        // }
       }
     }
     console.table(myProjects);
@@ -112,7 +113,7 @@ confirmEditButton.addEventListener('click', () => {
         myProjects[i].toDos[j].priority =
           document.getElementById('edit-priority').value;
         console.log(myProjects);
-        // now we render myProjects through the forloops below
+        // now we render myProjects and update LS through the forloops below
         for (let k = 0; k < myProjects.length; k++) {
           if (myProjects[k].name === currentProjectHolder) {
             for (let l = 0; l < myProjects[k].toDos.length; l++) {
@@ -165,17 +166,10 @@ function projectSidebarButton() {
   });
 }
 
-function saveTodoToLocal(title) {
-  console.log('saving object to local storage...');
-  localStorage.setItem('title', document.getElementById('title').value);
-  return { title };
-}
-
 export {
   myProjects,
   insertProjectToSideBar,
   projectSidebarButton,
   currentProjectHolder,
   displayTodosFromSpecificProject,
-  saveTodoToLocal,
 };
