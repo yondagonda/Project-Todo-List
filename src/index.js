@@ -8,17 +8,21 @@ import {
   displayTodosFromSpecificProject,
 } from './DOMStuff';
 
-// const addItemButton = document.querySelector('.add-todo'); // POPUP FUNCTIONALITY STUFF
+// future features to add: project delete button, more info button, close popups 'x' button
 
-// addItemButton.addEventListener('click', () => {
-//   console.log('wassup');
-//   document.querySelector('.task-popup').style.display = 'block';
-// });
-// const addProjectButton = document.querySelector('.add-project'); // this will enable popup functionality
-// addProjectButton.addEventListener('click', () => {
-//   console.log('yo');
-//   document.querySelector('.project-popup').style.display = 'block';
-// });
+const addItemButton = document.querySelector('.add-todo'); // POPUP FUNCTIONALITY
+addItemButton.addEventListener('click', () => {
+  document.querySelector('.project-popup').style.display = 'none';
+  document.querySelector('.edit-todo-popup').style.display = 'none';
+  document.querySelector('.task-popup').style.display = 'block';
+});
+
+const addProjectButton = document.querySelector('.add-project');
+addProjectButton.addEventListener('click', () => {
+  document.querySelector('.task-popup').style.display = 'none';
+  document.querySelector('.edit-todo-popup').style.display = 'none';
+  document.querySelector('.project-popup').style.display = 'block';
+});
 
 const createTodoButton = document.getElementById('create');
 const createProjectButton = document.getElementById('create-project');
@@ -28,6 +32,8 @@ myProjects.push(DefaultProjects);
 
 // CREATE BUTTON ON PROJECT FORM
 createProjectButton.addEventListener('click', () => {
+  document.querySelector('.project-popup').style.display = 'none';
+
   const projectsNameInput = document.getElementById('project-name').value;
   const theProject = new Project(projectsNameInput);
   myProjects.push(theProject);
@@ -42,8 +48,6 @@ createProjectButton.addEventListener('click', () => {
     }
   }
 });
-
-// features to add: project deletion button, more info popup for the todos, set limit of 3 projects max?
 
 function LOCAL_STORAGE_STUFF() {
   // retrieves projects from LS and pushes it into myProjects
@@ -86,6 +90,8 @@ LOCAL_STORAGE_STUFF();
 
 // CREATE BUTTON ON TODO FORM
 createTodoButton.addEventListener('click', () => {
+  document.querySelector('.task-popup').style.display = 'none';
+
   const titleInput = document.getElementById('title').value;
   const descriptionInput = document.getElementById('description').value;
   const dueDateInput = document.getElementById('dueDate').value;

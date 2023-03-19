@@ -4,70 +4,91 @@
   box-sizing: border-box;
 }
 
-/*:root {
-  --clr-neutral-100: #fff;
-  --clr-primary-500: rgb(204, 162, 107);
+:root {
+  --clr-primary: rgb(242, 242, 242);
+  --clr-accent: rgb(216, 92, 83);
 
-  --ff-primary: 'Poppins', Arial;
-  --ff-accent: 'Great Vibes';
-}*/
+  --ff-primary: Arial;
+  /* --ff-accent: 'Great Vibes'; */
+}
 
 * {
   margin: 0;
   padding: 0;
-  /*font-family: var(--ff-primary);*/
+  font-family: var(--ff-primary);
 }
 
 main {
-  border: 1px solid black;
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   width: clamp(450px, 90%, 1000px);
   margin-inline: auto;
   margin-top: 1em;
-  border-radius: 4px;
+  border-radius: 12px;
 }
 
 header {
-  background-color: rgb(216, 92, 83);
+  background-color: var(--clr-accent);
   color: white;
-  font-size: 1.5em;
-  padding: 0.2em;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 0.5em;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
 container {
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 0.9fr 3fr;
 }
 
 .side-bar {
-  border-right: 1px solid black;
   padding: 1em;
   display: flex;
   flex-direction: column;
   gap: 2em;
+  background-color: var(--clr-primary);
+  border-bottom-left-radius: 12px;
 }
 .side-bar > * {
   font-size: 16px;
   padding: 0.6em;
 }
 
-.projects {
-  padding-top: 1em;
-}
-
 .content {
   padding: 1em;
+  padding-left: 1.4em;
+}
+.content-header {
+  padding-bottom: 0.8em;
+  padding-top: 1.2em;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .add-todo,
 .add-project {
-  font-size: 2em;
-  border-radius: 14px;
-  padding-inline: 0.5em;
+  font-size: 1.9em;
+  border-radius: 22px;
+  padding-inline: 0.3em;
+  margin-top: 1em;
+  background-color: var(--clr-accent);
+  border: 0;
+  color: var(--clr-primary);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .task-popup {
   padding: 5em;
-  /*display: none;*/
+  display: none;
+}
+.project-popup {
+  padding: 5em;
+  display: none;
+}
+.edit-todo-popup {
+  padding: 5em;
+  display: none;
 }
 
 .task-form,
@@ -75,9 +96,12 @@ container {
 .edit-todo-form {
   display: flex;
   flex-direction: column;
-  max-width: 50%;
+  width: clamp(300px, 60%, 530px);
   gap: 5px;
   margin-inline: auto;
+  border: 1px solid black;
+  border-radius: 6px;
+  padding: 2em;
 }
 
 .project-form {
@@ -86,19 +110,48 @@ container {
 
 .todo-entry {
   padding: 1em;
-  border: 1px solid black;
+  border-bottom: 1px solid rgb(0, 0, 0, 0.15);
   display: flex;
   justify-content: space-between;
 }
 .todo-buttons {
   display: flex;
-  gap: 6px;
+  gap: 0.2em;
+  align-items: center;
 }
 .todo-buttons > * {
-  padding: 0.4em;
+  padding: 0.5em;
+  border: 0;
+  background-color: white;
+  font-size: 0.9em;
+}
+.todo-buttons > *:hover {
+  font-weight: bold;
+}
+
+.projects-header {
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 0.2em;
 }
 
 .projects-display {
   display: flex;
   flex-direction: column;
+  gap: 0.2em;
+}
+
+.project-button {
+  font-size: 14px;
+  height: 1.8em;
+  border: 0;
+  text-align: left;
+  background-color: var(--clr-primary);
+}
+.project-button:hover {
+  font-weight: bold;
+}
+
+.todoDueDate {
+  color: green;
 }

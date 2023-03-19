@@ -20,23 +20,26 @@ function displayTodosFromSpecificProject(x, y) {
   todoTitle.innerText = `To-do: ${myProjects[x].toDos[y].title}`;
   todoEntryContainer.appendChild(todoTitle);
 
-  // const todoDescription = document.createElement('div'); // comment this out later?
-  // todoDescription.classList.add('todoDescription');
-  // todoDescription.innerText = myProjects[x].toDos[y].description;
-  // todoEntryContainer.appendChild(todoDescription);
+  const todoDescription = document.createElement('div');
+  todoDescription.classList.add('todoDescription');
+  if (myProjects[x].toDos[y].description !== '') {
+    todoDescription.innerText = `Description: ${myProjects[x].toDos[y].description}`;
+  }
+  todoEntryContainer.appendChild(todoDescription);
 
   const todoDueDate = document.createElement('div');
   todoDueDate.classList.add('todoDueDate');
-  // todoDueDate.innerText = `Due: ${format(
-  //   new Date(myProjects[x].toDos[y].dueDate), // issue: due date MUST be set for format() to work, otherwise error
-  //   'dd MMM yyyy'
-  // )}`;
-  todoDueDate.innerText = `Due: ${myProjects[x].toDos[y].dueDate}`;
+  if (myProjects[x].toDos[y].dueDate !== '') {
+    todoDueDate.innerText = `${format(
+      new Date(myProjects[x].toDos[y].dueDate),
+      'dd MMM yyyy'
+    )}`;
+  }
   todoEntryContainer.appendChild(todoDueDate);
 
   const todoPriority = document.createElement('div');
   todoPriority.classList.add('todoPriority');
-  todoPriority.innerText = `Priority: ${myProjects[x].toDos[y].priority}`; // comment this out later?
+  todoPriority.innerText = `Priority: ${myProjects[x].toDos[y].priority}`;
   todoEntryContainer.appendChild(todoPriority);
 
   const todoButtons = document.createElement('div');
@@ -46,19 +49,19 @@ function displayTodosFromSpecificProject(x, y) {
   const editButton = document.createElement('button');
   editButton.classList.add('edit-button');
   editButton.dataset.id = myProjects[x].toDos[y].id;
-  editButton.innerHTML = 'edit';
+  editButton.innerHTML = 'Edit';
   todoButtons.appendChild(editButton);
 
   const trashButton = document.createElement('button');
   trashButton.classList.add('trash-button');
   trashButton.dataset.id = myProjects[x].toDos[y].id;
-  trashButton.innerHTML = 'trash';
+  trashButton.innerHTML = 'Delete';
   todoButtons.appendChild(trashButton);
 
-  const infoButton = document.createElement('button');
-  infoButton.classList.add('info-button');
-  infoButton.innerHTML = 'info';
-  todoButtons.appendChild(infoButton);
+  // const infoButton = document.createElement('button'); // getting rid of this for now
+  // infoButton.classList.add('info-button');
+  // infoButton.innerHTML = 'Info';
+  // todoButtons.appendChild(infoButton);
 
   trashButton.addEventListener('click', (e) => {
     dataID = +e.target.getAttribute('data-id'); // TRASH BUTTON FUNCTIONALITY
@@ -81,6 +84,10 @@ function displayTodosFromSpecificProject(x, y) {
   });
 
   editButton.addEventListener('click', (e) => {
+    document.querySelector('.task-popup').style.display = 'none';
+    document.querySelector('.project-popup').style.display = 'none';
+    document.querySelector('.edit-todo-popup').style.display = 'block';
+
     dataID = +e.target.getAttribute('data-id'); // FETCHES VALUES TO POPULATE EDIT FORM
     console.log(`now editing todo ID: ${dataID}`);
     if (myProjects[x].toDos[y].id === dataID) {
@@ -99,6 +106,7 @@ function displayTodosFromSpecificProject(x, y) {
 
 const confirmEditButton = document.getElementById('confirm-edit'); // EDIT BUTTON FUNCTIONALITY
 confirmEditButton.addEventListener('click', () => {
+  document.querySelector('.edit-todo-popup').style.display = 'none';
   const display = document.querySelector('.content-display');
   display.innerHTML = '';
   for (let i = 0; i < myProjects.length; i++) {
@@ -160,7 +168,7 @@ function projectSidebarButton() {
       console.log('You are now in project:', currentProjectHolder);
       document.querySelector(
         '.content-header'
-      ).innerText = `Project: ${currentProjectHolder}`;
+      ).innerText = `${currentProjectHolder}`;
       return currentProjectHolder;
     });
   });
