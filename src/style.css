@@ -9,7 +9,6 @@
   --clr-accent: rgb(216, 92, 83);
 
   --ff-primary: Arial;
-  /* --ff-accent: 'Great Vibes'; */
 }
 
 * {
@@ -96,12 +95,46 @@ container {
 .edit-todo-form {
   display: flex;
   flex-direction: column;
-  width: clamp(300px, 60%, 530px);
+  width: clamp(300px, 60%, 450px);
   gap: 5px;
   margin-inline: auto;
   border: 1px solid black;
   border-radius: 6px;
   padding: 2em;
+  border: 1px solid rgb(0, 0, 0, 0.3);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  align-items: center;
+}
+
+.task-form > *,
+.edit-todo-form > * {
+  min-width: 70%;
+}
+
+input {
+  border: 1px solid rgb(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+select {
+  border-radius: 4px;
+  background-color: white;
+}
+
+#create-project,
+#confirm-edit,
+#create,
+#cancel-todo,
+#cancel-edit,
+#cancel-project {
+  background-color: var(--clr-accent);
+  border: 0;
+  color: var(--clr-primary);
+  min-width: 30%;
+  padding: 0.5em 1em;
+  font-size: 0.8em;
+  border-radius: 4px;
+  margin-top: 1.8em;
+  font-weight: bold;
 }
 
 .project-form {
@@ -132,7 +165,7 @@ container {
 .projects-header {
   font-size: 17px;
   font-weight: bold;
-  margin-bottom: 0.2em;
+  margin-bottom: 0.5em;
 }
 
 .projects-display {
@@ -154,4 +187,31 @@ container {
 
 .todoDueDate {
   color: green;
+}
+
+.create-todo-buttons,
+.create-project-buttons,
+.create-edit-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 0.6em;
+}
+
+#cancel-todo,
+#cancel-edit,
+#cancel-project {
+  background-color: white;
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  color: rgb(77, 76, 76);
+}
+#cancel-todo:hover,
+#cancel-edit:hover,
+#cancel-project:hover {
+  background-color: rgb(238, 236, 236);
+}
+#create-project:hover,
+#confirm-edit:hover,
+#create:hover {
+  background-color: rgb(185, 63, 55);
 }

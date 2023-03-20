@@ -44,15 +44,20 @@
           <option value="high">High</option>
           <option value="urgent">Urgent</option>
         </select>
-
-        <button type="button" id="create">Create Todo</button>
+        <div class="create-todo-buttons">
+          <button type="button" id="cancel-todo">Cancel</button>
+          <button type="button" id="create">Create Todo</button>
+        </div>
       </form>
     </div>
     <div class="project-popup">
       <form class="project-form" action="" method="post">
-        <label for="project-name">Add New Project</label>
+        <label for="project-name">Name of New Project</label>
         <input type="text" id="project-name" />
-        <button type="button" id="create-project">Create Project</button>
+        <div class="create-project-buttons">
+          <button type="button" id="cancel-project">Cancel</button>
+          <button type="button" id="create-project">Add New Project</button>
+        </div>
       </form>
     </div>
 
@@ -74,8 +79,10 @@
           <option value="high">High</option>
           <option value="urgent">Urgent</option>
         </select>
-
-        <button type="button" id="confirm-edit">Confirm Edits</button>
+        <div class="create-edit-buttons">
+          <button type="button" id="cancel-edit">Cancel</button>
+          <button type="button" id="confirm-edit">Confirm Edits</button>
+        </div>
       </form>
     </div>
   </body>

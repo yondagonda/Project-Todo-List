@@ -1,6 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import { format } from 'date-fns';
-import { currentProjectHolder, saveTodoToLocal } from './DOMStuff';
+import { currentProjectHolder } from './DOMStuff';
 
 let count = 0;
 
@@ -11,8 +10,7 @@ class TodoItem {
     this.dueDate = dueDate;
     this.priority = priority;
     this.projectID = currentProjectHolder;
-    // this.id = Date.now()
-    this.id = count++; // maybe try math.random instead??
+    this.id = count++;
   }
 }
 

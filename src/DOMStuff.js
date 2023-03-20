@@ -8,6 +8,7 @@ let dataID;
 
 function displayTodosFromSpecificProject(x, y) {
   const display = document.querySelector('.content-display');
+
   const todoEntry = document.createElement('div');
   todoEntry.classList.add('todo-entry');
   display.appendChild(todoEntry);
@@ -58,17 +59,17 @@ function displayTodosFromSpecificProject(x, y) {
   trashButton.innerHTML = 'Delete';
   todoButtons.appendChild(trashButton);
 
-  // const infoButton = document.createElement('button'); // getting rid of this for now
+  // const infoButton = document.createElement('button'); // REMOVING MORE INFO BUTTON FOR NOW
   // infoButton.classList.add('info-button');
   // infoButton.innerHTML = 'Info';
   // todoButtons.appendChild(infoButton);
 
+  // TRASH BUTTON FUNCTIONALITY
   trashButton.addEventListener('click', (e) => {
-    dataID = +e.target.getAttribute('data-id'); // TRASH BUTTON FUNCTIONALITY
+    dataID = +e.target.getAttribute('data-id');
     display.innerHTML = '';
     myProjects[x].removeTodoItem(dataID);
-
-    // first we update the LS by rendering myProjects' values to LS
+    // first we update the LS by replacing LS' current values with the updated myProjects values
     for (let k = 0; k < myProjects.length; k++) {
       if (myProjects[k].name === currentProjectHolder) {
         localStorage.setItem(myProjects[k].name, JSON.stringify(myProjects[k]));
@@ -109,6 +110,7 @@ confirmEditButton.addEventListener('click', () => {
   document.querySelector('.edit-todo-popup').style.display = 'none';
   const display = document.querySelector('.content-display');
   display.innerHTML = '';
+
   for (let i = 0; i < myProjects.length; i++) {
     for (let j = 0; j < myProjects[i].toDos.length; j++) {
       if (myProjects[i].toDos[j].id === dataID) {
@@ -140,13 +142,12 @@ confirmEditButton.addEventListener('click', () => {
 });
 
 function insertProjectToSideBar() {
-  const projectsDisplay = document.querySelector('.projects-display');
   const projectsNameInput = document.getElementById('project-name').value;
   if (projectsNameInput !== '') {
     const projectsSidebar = document.createElement('button');
     projectsSidebar.classList.add('project-button');
     projectsSidebar.innerHTML = projectsNameInput;
-    projectsDisplay.appendChild(projectsSidebar);
+    document.querySelector('.projects-display').appendChild(projectsSidebar);
   }
 }
 
@@ -174,10 +175,62 @@ function projectSidebarButton() {
   });
 }
 
+// cancel button functionality for our popups
+const cancelTodo = document.getElementById('cancel-todo');
+cancelTodo.addEventListener('click', () => {
+  document.querySelector('.task-popup').style.display = 'none';
+});
+const cancelProject = document.getElementById('cancel-project');
+cancelProject.addEventListener('click', () => {
+  document.querySelector('.project-popup').style.display = 'none';
+});
+const cancelEdit = document.getElementById('cancel-edit');
+cancelEdit.addEventListener('click', () => {
+  document.querySelector('.edit-todo-popup').style.display = 'none';
+});
+
+function displayLocalStorage() {
+  // retrieves projects from LS and pushes projects into myProjects
+  for (let m = 1; m < Object.values(localStorage).length; m++) {
+    const ourObjects = JSON.parse(Object.values(localStorage)[m]);
+    const projectFromLS = new Project(ourObjects.name);
+    myProjects.push(projectFromLS);
+  }
+  // retrieves toDos from LS and pushes it into the projects in myProjects
+  for (let q = 0; q < Object.values(localStorage).length; q++) {
+    const ourObjects = JSON.parse(Object.values(localStorage)[q]);
+    for (let r = 0; r < ourObjects.toDos.length; r++) {
+      const todoFromLS = new TodoItem(
+        ourObjects.toDos[r].title,
+        ourObjects.toDos[r].description,
+        ourObjects.toDos[r].dueDate,
+        ourObjects.toDos[r].priority
+      );
+      myProjects[q].toDos.push(todoFromLS);
+    }
+  }
+  // displays myProjects/LS values and also the sidebar project buttons to the DOM:
+  console.log(myProjects);
+  for (let k = 0; k < myProjects.length; k++) {
+    const projectsSidebar = document.createElement('button');
+    projectsSidebar.classList.add('project-button');
+    projectsSidebar.innerHTML = myProjects[k].name;
+    document.querySelector('.projects-display').appendChild(projectsSidebar);
+    projectSidebarButton();
+
+    for (let l = 0; l < myProjects[k].toDos.length; l++) {
+      if (myProjects[k].name === currentProjectHolder) {
+        displayTodosFromSpecificProject(k, l);
+      }
+    }
+  }
+}
+
 export {
   myProjects,
   insertProjectToSideBar,
   projectSidebarButton,
   currentProjectHolder,
   displayTodosFromSpecificProject,
+  displayLocalStorage,
 };
