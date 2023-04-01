@@ -1,9 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>Development</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"><script defer src="main.js"></script></head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List App</title>
+    <script src="main.js" defer></script>
+  </head>
   <body>
+    <main>
+      <header>Todo App</header>
+      <container>
+        <section class="side-bar">
+          <div class="projects">
+            <div class="projects-header">Projects</div>
+            <div class="projects-display"></div>
+            <button class="add-project">+</button>
+          </div>
+        </section>
+        <section class="content">
+          <div class="content-header">Default</div>
+          <div class="content-display"></div>
+          <button class="add-todo">+</button>
+        </section>
+      </container>
+    </main>
+
+    <div class="task-popup">
+      <form class="task-form" action="" method="post">
+        <label for="title">Title</label>
+        <input type="text" id="title" />
+
+        <label for="description">Description</label>
+        <input type="text" id="description" />
+
+        <label for="due-date">Due Date</label>
+        <input type="date" id="dueDate" />
+
+        <label for="priority">Priority</label>
+        <select name="priority" id="priority">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="urgent">Urgent</option>
+        </select>
+        <div class="create-todo-buttons">
+          <button type="button" id="cancel-todo">Cancel</button>
+          <button type="button" id="create">Create Todo</button>
+        </div>
+      </form>
+    </div>
+    <div class="project-popup">
+      <form class="project-form" action="" method="post">
+        <label for="project-name">Name of New Project</label>
+        <input type="text" id="project-name" />
+        <div class="create-project-buttons">
+          <button type="button" id="cancel-project">Cancel</button>
+          <button type="button" id="create-project">Add New Project</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="edit-todo-popup">
+      <form class="edit-todo-form" action="" method="post">
+        <label for="edit-title">Edit Title</label>
+        <input type="text" id="edit-title" />
+
+        <label for="edit-description">Edit Description</label>
+        <input type="text" id="edit-description" />
+
+        <label for="edit-due-date">Edit Due Date</label>
+        <input type="date" id="edit-due-date" />
+
+        <label for="edit-priority">Edit Priority</label>
+        <select name="priority" id="edit-priority">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="urgent">Urgent</option>
+        </select>
+        <div class="create-edit-buttons">
+          <button type="button" id="cancel-edit">Cancel</button>
+          <button type="button" id="confirm-edit">Confirm Edits</button>
+        </div>
+      </form>
+    </div>
   </body>
 </html>
